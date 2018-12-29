@@ -1,54 +1,43 @@
 package main
 
 import (
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
-func TestProcessData(test *testing.T) {
-	test.Run("Can handle empty data", func(t *testing.T) {
-		result := processData([]Entry{})
-		isEmpty := result == DataDescription{}
+func TestProcessData_EmptyData_ReturnsEmptySlice(test *testing.T) {
+	result := processData([]Entry{})
+	require.Empty(test, result)
+}
 
-		if (!isEmpty) {
-			t.Error("Struct was not empty")
-		}
-	})
+func TestProcessData_WithEntries_CanReturnProperCount(test *testing.T) {
+	data := []Entry{
+		{Id: 1},
+		{Id: 2},
+	}
 
-	test.Run("Can return a proper count", func(t *testing.T) {
-		data := []Entry{
-			{Id: 1},
-			{Id: 2},
-		}
+	result := processData(data)
+	require.True(test, result.Count == 2)
+}
 
-		result := processData(data)
-		if result.Count != 2 {
-			t.Errorf("Struct has the wrong Count, expected 2 but got %d", result.Count)
-		}
-	})
+func TestProcessData_WithEntries_CanReturnCorrectCrimeType(test *testing.T) {
+	data := []Entry{
+		{CrimeType: "Theft"},
+		{CrimeType: "Assault"},
+		{CrimeType: "Theft"},
+	}
 
-	test.Run("Can return the correct crime type", func(t *testing.T) {
-		data := []Entry{
-			{CrimeType: "Theft"},
-			{CrimeType: "Assault"},
-			{CrimeType: "Theft"},
-		}
+	result := processData(data)
+	require.Equal(test, result.MostCommonCrimeType, "Theft")
+}
 
-		result := processData(data)
-		if result.MostCommonCrimeType != "Theft" {
-			t.Errorf("Struct has the wrong crime type, expected 'Theft' but got '%s'", result.MostCommonCrimeType)
-		}
-	})
+func TestProcessData_WithEntries_CanReturnCorrectLocation(test *testing.T) {
+	data := []Entry{
+		{Location: Location{Name: "Lund"} },
+		{Location: Location{Name: "Malmö"}},
+		{Location: Location{Name: "Malmö"}},
+	}
 
-	test.Run("Can return the correct location", func(t *testing.T) {
-		data := []Entry{
-			{Location: Location{Name: "Lund"} },
-			{Location: Location{Name: "Malmö"}},
-			{Location: Location{Name: "Malmö"}},
-		}
-
-		result := processData(data)
-		if result.WorstLocation.Name != "Malmö" {
-			t.Errorf("Struct has the wrong location, expected Malmö but got '%s'", result.WorstLocation.Name)
-		}
-	})
+	result := processData(data)
+	require.Equal(test, result.WorstLocation.Name, "Malmö")
 }
