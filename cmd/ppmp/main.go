@@ -7,7 +7,7 @@ import (
 )
 
 func output(data processing.DataDescription) {
-	fmt.Println("OUTPUT:")
+	fmt.Println("Current situation in sweden:")
 	fmt.Println("_____________________")
 	fmt.Printf("Number of events: %d\n", data.Count)
 	fmt.Printf("Most common crime type: %s\n", data.MostCommonCrimeType)
@@ -15,6 +15,8 @@ func output(data processing.DataDescription) {
 }
 
 func main() {
+	fmt.Println("Contacting API, this could take some time...")
+	fmt.Println("")
 	data := loader.LoadData()
 	result := processing.ProcessData(data)
 	output(result)
