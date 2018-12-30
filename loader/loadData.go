@@ -1,4 +1,4 @@
-package main
+package loader
 
 import (
 	"encoding/json"
@@ -26,9 +26,9 @@ func handleError(err error) {
 	log.Fatal("Fatal error: ", err)
 }
 
-// loadData will load the data from the police and return it.
+// loadData will load the loader from the police and return it.
 // If anything goes wrong, it will log the error.
-func loadData() []Entry {
+func LoadData() []Entry {
 	var entries []Entry
 	url := "https://polisen.se/api/events"
 

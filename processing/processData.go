@@ -1,12 +1,16 @@
-package main
+package processing
+
+import (
+	"github.com/police-police-mashed-potatoes/loader"
+)
 
 type DataDescription struct {
 	Count               int
-	WorstLocation       Location
+	WorstLocation       loader.Location
 	MostCommonCrimeType string
 }
 
-func processCrimeType(data []Entry) string {
+func processCrimeType(data []loader.Entry) string {
 	var crimeTypes = make(map[string]int)
 
 	for _, entry := range data {
@@ -28,8 +32,8 @@ func processCrimeType(data []Entry) string {
 	return mostCommonCrimeTime
 }
 
-func processLocation(data []Entry) Location {
-	var locations = make(map[Location]int)
+func processLocation(data []loader.Entry) loader.Location {
+	var locations = make(map[loader.Location]int)
 
 	for _, entry := range data {
 		if _, ok := locations[entry.Location]; !ok {
@@ -39,7 +43,7 @@ func processLocation(data []Entry) Location {
 		locations[entry.Location] += 1
 	}
 
-	mostCommonLocation := Location{}
+	mostCommonLocation := loader.Location{}
 	highestCount := 0
 	for key, val := range locations {
 		if val > highestCount {
@@ -51,8 +55,8 @@ func processLocation(data []Entry) Location {
 	return mostCommonLocation
 }
 
-// processData will create a struct with information describing the data
-func processData(data []Entry) DataDescription {
+// processData will create a struct with information describing the loader
+func ProcessData(data []loader.Entry) DataDescription {
 	dataDescription := DataDescription{}
 	dataDescription.Count = len(data)
 	dataDescription.MostCommonCrimeType = processCrimeType(data)
