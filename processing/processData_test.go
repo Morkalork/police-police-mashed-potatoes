@@ -1,7 +1,7 @@
 package processing
 
 import (
-	"../../police-police-mashed-potatoes/loader"
+	"github.com/police-police-mashed-potatoes/loader"
 	"github.com/stretchr/testify/require"
 	"testing"
 )

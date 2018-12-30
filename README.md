@@ -35,13 +35,13 @@ After this the package will be installed under `$GOPATH/bin/ppmp.exe` and can be
 There are tests available which can be executed by running the following command:
 
 ```
-go test police-police-mashed-potatoes/
+go test ./... -v
 ```
 
 To get coverage, execute the following command:
 
 ```
-go test -coverprofile=c.out police-police-mashed-potatoes
+go test -coverprofile=c.out ./...
 ```
 
 ## Why?
