@@ -5,20 +5,30 @@ kingdom of Sweden!
 
 ## Installation
 
+_(These instructions are written for a Windows environment. If you use Linux then you either know how to adapt to these instructions or you switch back to Windows)_
+
 Clone the repository:
 
 ```
-git clone #REPO
+git clone https://github.com/Morkalork/police-police-mashed-potatoes
 ```
 
-Build the project:
+Enter the directory and build the project:
 
 ```
-go build police-police-mashed-potatoes/
+go build cmd/ppmp/
 ```
 
-This will generate a police-police-mashed-potatoes.exe file which you can execute in whatever way you find most suiting
-(such as `./police-police-mashed-potatoes.exe`)
+This will generate a main.exe file which you can execute in whatever way you find most suiting
+(such as `./main.exe`)
+
+You can also install the software with the following command:
+
+```
+go install ./...
+```
+
+After this the package will be installed under `$GOPATH/bin/ppmp.exe` and can be executed by just entering `ppmp.exe` in your terminal. 
 
 ## Tests
 
