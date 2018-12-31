@@ -1,4 +1,4 @@
-package loader
+package data
 
 import (
 	"encoding/json"
@@ -28,7 +28,7 @@ func handleError(err error) {
 
 // loadData will load the loader from the police and return it.
 // If anything goes wrong, it will log the error.
-func LoadData() []Entry {
+func LoadFromAPI() []Entry {
 	var entries []Entry
 	url := "https://polisen.se/api/events"
 

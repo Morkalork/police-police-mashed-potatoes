@@ -1,4 +1,4 @@
-package processing
+package business
 
 import (
 	"github.com/police-police-mashed-potatoes/loader"
@@ -7,12 +7,12 @@ import (
 )
 
 func TestProcessData_EmptyData_ReturnsEmptySlice(test *testing.T) {
-	result := ProcessData([]loader.Entry{})
+	result := ProcessData([]data.Entry{})
 	require.Empty(test, result)
 }
 
 func TestProcessData_WithEntries_CanReturnProperCount(test *testing.T) {
-	data := []loader.Entry{
+	data := []data.Entry{
 		{Id: 1},
 		{Id: 2},
 	}
@@ -22,7 +22,7 @@ func TestProcessData_WithEntries_CanReturnProperCount(test *testing.T) {
 }
 
 func TestProcessData_WithEntries_CanReturnCorrectCrimeType(test *testing.T) {
-	data := []loader.Entry{
+	data := []data.Entry{
 		{CrimeType: "Theft"},
 		{CrimeType: "Assault"},
 		{CrimeType: "Theft"},
@@ -33,10 +33,10 @@ func TestProcessData_WithEntries_CanReturnCorrectCrimeType(test *testing.T) {
 }
 
 func TestProcessData_WithEntries_CanReturnCorrectLocation(test *testing.T) {
-	data := []loader.Entry{
-		{Location: loader.Location{Name: "Lund"} },
-		{Location: loader.Location{Name: "Malmö"}},
-		{Location: loader.Location{Name: "Malmö"}},
+	data := []data.Entry{
+		{Location: data.Location{Name: "Lund"} },
+		{Location: data.Location{Name: "Malmö"}},
+		{Location: data.Location{Name: "Malmö"}},
 	}
 
 	result := ProcessData(data)

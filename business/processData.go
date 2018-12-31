@@ -1,19 +1,17 @@
-package processing
+package business
 
-import (
-	"github.com/police-police-mashed-potatoes/loader"
-)
+import "github.com/police-police-mashed-potatoes/data"
 
 type DataDescription struct {
 	Count               int
-	WorstLocation       loader.Location
+	WorstLocation       data.Location
 	MostCommonCrimeType string
 }
 
-func processCrimeType(data []loader.Entry) string {
+func processCrimeType(entries []data.Entry) string {
 	var crimeTypes = make(map[string]int)
 
-	for _, entry := range data {
+	for _, entry := range entries {
 		if _, ok := crimeTypes[entry.CrimeType]; !ok {
 			crimeTypes[entry.CrimeType] = 0
 		}
@@ -32,10 +30,10 @@ func processCrimeType(data []loader.Entry) string {
 	return mostCommonCrimeTime
 }
 
-func processLocation(data []loader.Entry) loader.Location {
-	var locations = make(map[loader.Location]int)
+func processLocation(entries []data.Entry) data.Location {
+	var locations = make(map[data.Location]int)
 
-	for _, entry := range data {
+	for _, entry := range entries {
 		if _, ok := locations[entry.Location]; !ok {
 			locations[entry.Location] = 0
 		}
@@ -43,7 +41,7 @@ func processLocation(data []loader.Entry) loader.Location {
 		locations[entry.Location] += 1
 	}
 
-	mostCommonLocation := loader.Location{}
+	mostCommonLocation := data.Location{}
 	highestCount := 0
 	for key, val := range locations {
 		if val > highestCount {
@@ -56,11 +54,11 @@ func processLocation(data []loader.Entry) loader.Location {
 }
 
 // processData will create a struct with information describing the loader
-func ProcessData(data []loader.Entry) DataDescription {
+func ProcessData(entries []data.Entry) DataDescription {
 	dataDescription := DataDescription{}
-	dataDescription.Count = len(data)
-	dataDescription.MostCommonCrimeType = processCrimeType(data)
-	dataDescription.WorstLocation = processLocation(data)
+	dataDescription.Count = len(entries)
+	dataDescription.MostCommonCrimeType = processCrimeType(entries)
+	dataDescription.WorstLocation = processLocation(entries)
 
 	return dataDescription
 }
