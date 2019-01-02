@@ -2,6 +2,7 @@ package data
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -9,17 +10,17 @@ import (
 
 type Location struct {
 	Name string `json:"name"`
-	GPS string `json:"gps"`
+	GPS  string `json:"gps"`
 }
 
 type Entry struct {
-	Id int64 `json:"id"`
-	DateTime string `json:"datetime"`
-	Name string `json:"name"`
-	Summary string `json:"summary"`
-	Url string `json:"url"`
-	CrimeType string `json:"type"`
-	Location Location `json:"location"`
+	Id        int64    `json:"id"`
+	DateTime  string   `json:"datetime"`
+	Name      string   `json:"name"`
+	Summary   string   `json:"summary"`
+	Url       string   `json:"url"`
+	CrimeType string   `json:"type"`
+	Location  Location `json:"location"`
 }
 
 func handleError(err error) {
@@ -28,31 +29,60 @@ func handleError(err error) {
 
 // loadData will load the loader from the police and return it.
 // If anything goes wrong, it will log the error.
-func LoadFromAPI() []Entry {
+func LoadFromAPI(hours int, location string, crimeType string) []Entry {
 	var entries []Entry
-	url := "https://polisen.se/api/events"
+	hour := 0
+	for hour < hours {
+		url, urlError := buildUrl(hour, location, crimeType)
 
-	resp, err := http.Get(url)
+		if hour == 0 {
+			fmt.Print("Looking at current events... ")
+		} else {
+			plural := ""
+			if hour > 1 {
+				plural = "s"
+			}
+			fmt.Printf("Looking at events %d hour%s back... ", hour, plural)
+		}
 
-	if err != nil {
-		handleError(err)
-		return entries
-	}
+		if urlError != nil {
+			handleError(urlError)
+			return entries
+		}
 
-	defer resp.Body.Close()
+		resp, httpError := http.Get(url)
 
-	body, err := ioutil.ReadAll(resp.Body)
+		if httpError != nil {
+			handleError(httpError)
+			return entries
+		}
 
-	if err != nil {
-		handleError(err)
-		return entries
-	}
 
-	err = json.Unmarshal(body, &entries)
+		body, readError := ioutil.ReadAll(resp.Body)
 
-	if err != nil {
-		handleError(err)
-		return entries
+		if readError != nil {
+			handleError(readError)
+			return entries
+		}
+
+		var foundEntries []Entry
+		jsonError := json.Unmarshal(body, &foundEntries)
+		entries = append(entries, foundEntries...)
+
+		if jsonError != nil {
+			handleError(jsonError)
+			return entries
+		}
+
+		responseBodyError := resp.Body.Close()
+
+		if responseBodyError != nil {
+			handleError(responseBodyError)
+			return entries
+		}
+
+		fmt.Printf("found %d events\n", len(foundEntries))
+		hour++
 	}
 
 	return entries

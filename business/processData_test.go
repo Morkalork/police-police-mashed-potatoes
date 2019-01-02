@@ -1,7 +1,7 @@
 package business
 
 import (
-	"github.com/police-police-mashed-potatoes/loader"
+	"github.com/police-police-mashed-potatoes/data"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
