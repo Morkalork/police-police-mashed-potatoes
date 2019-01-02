@@ -12,6 +12,7 @@ func OutputResult(entries []data.Entry) {
 		return entries[i].CrimeType < entries[j].CrimeType
 	})
 
+	fmt.Println("")
 	fmt.Printf("Found the following %d event(s):\n", len(entries))
 	currentCrimeType := ""
 	for _, entry := range entries {
@@ -20,6 +21,12 @@ func OutputResult(entries []data.Entry) {
 			fmt.Println(strings.ToUpper(currentCrimeType))
 		}
 
-		fmt.Printf("   %d: (%s) %s\n", entry.Id, entry.Location.Name, entry.Summary)
+		fmt.Println(entry.DateTime)
+		fmt.Printf(
+			"   %s: (%s) %s\n",
+			entry.DateTime,
+			entry.Location.Name,
+			entry.Summary,
+		)
 	}
 }

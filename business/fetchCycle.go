@@ -13,16 +13,15 @@ type FetchCycle struct {
 }
 
 func (f FetchCycle) Start(config EventsConfig) {
-	fmt.Println("Launching!")
+	fmt.Println("Thank you for using Police Police Mashed Potatoes!")
+	fmt.Println("Initiating scan...")
+	fmt.Println("")
 
 	entries := data.LoadFromAPI(
 		config.Hours,
 		config.Location,
 		config.CrimeType,
 	)
-
-	fmt.Println("Done!")
-	fmt.Println("")
 
 	console.OutputResult(entries)
 }
