@@ -23,5 +23,6 @@ func (f FetchCycle) Start(config EventsConfig) {
 		config.CrimeType,
 	)
 
+	entries = SanitizeEntries(entries)
 	console.OutputResult(entries)
 }

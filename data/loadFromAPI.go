@@ -14,7 +14,7 @@ type Location struct {
 }
 
 type Entry struct {
-	Id        int64    `json:"id"`
+	Id        int    `json:"id"`
 	DateTime  string   `json:"datetime"`
 	Name      string   `json:"name"`
 	Summary   string   `json:"summary"`
@@ -36,7 +36,7 @@ func LoadFromAPI(hours int, location string, crimeType string) []Entry {
 		url, urlError := buildUrl(hour, location, crimeType)
 
 		if hour == 0 {
-			fmt.Print("Looking at current events... ")
+			fmt.Print("Looking at current events (first time can take a bit longer)... ")
 		} else {
 			plural := ""
 			if hour > 1 {

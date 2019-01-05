@@ -21,7 +21,6 @@ func OutputResult(entries []data.Entry) {
 			fmt.Println(strings.ToUpper(currentCrimeType))
 		}
 
-		fmt.Println(entry.DateTime)
 		fmt.Printf(
 			"   %s: (%s) %s\n",
 			entry.DateTime,
