@@ -28,7 +28,19 @@ You can also install the software with the following command:
 go install ./...
 ```
 
-After this the package will be installed under `$GOPATH/bin/ppmp.exe` and can be executed by just entering `ppmp.exe` in your terminal. 
+After this the package will be installed under `$GOPATH/bin/ppmp.exe` and can be executed by just entering `ppmp` in your terminal. Use the --help flag to get help, such as:
+
+```
+ppmp --help                         #Show the help
+ppmp --hours=48                     #Show the events for the last 48 hours
+ppmp --location=Stockholm           #Show the events only for Stockholm
+ppmp --hours=12 --crimetype=Brand   #Show only the last 12 hours and only fires (Brand)
+``` 
+Since the Api will only allow for you to fetch the last 500 events that your search renders, try to be specific in your search.
+
+It may look like this:
+
+![Police Police Mashed Potatoes in action!](/resources/screenshots/ppmp.png)
 
 ## Tests
 
